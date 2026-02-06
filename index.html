@@ -41,6 +41,7 @@
 </head>
 <body>
     <canvas id="star-canvas"></canvas>
+    <audio id="roseMusic" src="voice.mp3" preload="auto"></audio>
     <div id="boot-screen"><div class="term-box" id="term"></div></div>
 
     <div id="challenge">
@@ -152,18 +153,51 @@
         }
 
         function showSurprise(item) {
-            document.documentElement.style.setProperty('--theme', item.color);
-            document.getElementById('m-title').innerText = item.n;
-            document.getElementById('m-icon').innerText = item.i;
-            document.getElementById('m-desc').innerText = item.m;
-            document.getElementById('m-stat').innerText = item.s;
-            const img = document.getElementById('m-img');
-            if(item.img && item.img !== "PASTE_IMAGE_URL") { img.src = item.img; img.style.display = "block"; } else { img.style.display = "none"; }
-            document.getElementById('modal').style.display = 'flex';
-            confetti({particleCount: 100, colors: [item.color, '#ffffff']});
-        }
 
-        function closeM() { document.getElementById('modal').style.display = 'none'; }
+    const music = document.getElementById("roseMusic");
+
+    // Play music ONLY for Rose Day
+    if (item.n === "Rose Day") {
+        if (music) {
+            music.currentTime = 0;
+            music.play().catch(()=>{});
+        }
+    } else {
+        if (music) {
+            music.pause();
+            music.currentTime = 0;
+        }
+    }
+
+    document.documentElement.style.setProperty('--theme', item.color);
+    document.getElementById('m-title').innerText = item.n;
+    document.getElementById('m-icon').innerText = item.i;
+    document.getElementById('m-desc').innerText = item.m;
+    document.getElementById('m-stat').innerText = item.s;
+
+    const img = document.getElementById('m-img');
+    if(item.img && item.img !== "PASTE_IMAGE_URL") {
+        img.src = item.img;
+        img.style.display = "block";
+    } else {
+        img.style.display = "none";
+    }
+
+    document.getElementById('modal').style.display = 'flex';
+    confetti({particleCount: 100, colors: [item.color, '#ffffff']});
+}
+
+
+        function closeM() {
+    document.getElementById('modal').style.display = 'none';
+
+    const music = document.getElementById("roseMusic");
+    if (music) {
+        music.pause();
+        music.currentTime = 0;
+    }
+}
+
         window.addEventListener('keydown', e => { buffer += e.key.toUpperCase(); if(buffer.includes(secret)) { unlocked = true; initUniverse(); } });
         
         // --- FASTER & BIGGER GALAXY + LOVE EMOJIS ---
