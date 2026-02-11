@@ -44,6 +44,10 @@
     <audio id="roseMusic" src="voice.mp3" preload="auto"></audio>
     <audio id="chocoMusic" src="choco.mp3" preload="auto"></audio>
     <audio id="teddyMusic" src="https://raw.githubusercontent.com/CreativeThinking123/valentine-tech/main/orange.mp3" preload="auto"></audio>
+    <audio id="raksMusic" src="https://raw.githubusercontent.com/CreativeThinking123/Divya4u/main/raks.mp3" preload="auto"></audio>
+    <audio id="cheliyaMusic" src="https://raw.githubusercontent.com/CreativeThinking123/Divya4u/main/cheliya.mp3" preload="auto"></audio>
+    <audio id="neetiMusic" src="https://raw.githubusercontent.com/CreativeThinking123/Divya4u/main/neeti.mp3" preload="auto"></audio>
+    <audio id="sundariMusic" src="https://raw.githubusercontent.com/CreativeThinking123/Divya4u/main/sundari.mp3" preload="auto"></audio>
     <div id="boot-screen"><div class="term-box" id="term"></div></div>
 
     <div id="challenge">
@@ -114,7 +118,7 @@ const secretQuestions = {
         const data = [
             { d: 7, n: "Rose Day", i: "🌹", color: "#ff2d55", m: "A digital rose for you, Divya!", s: "MODE: Floral\nSTATUS: Eternal", img: "https://raw.githubusercontent.com/CreativeThinking123/check/main/dv2.jpeg" },
             { d: 8, n: "Propose Day", i: "💍", color: "#ff5e78", m: "Will you stay in my heart forever?", s: "PROTO: Soul_Shake", img: "https://raw.githubusercontent.com/CreativeThinking123/check/main/dvy.jpeg" },
-            { d: 9, n: "Chocolate Day", i: "🍫", color: "#a855f7", m: "Sweeter than chocolate, that's you!", s: "BYTE: Sweet", img: "https://raw.githubusercontent.com/CreativeThinking123/Divya4u/main/div.png" },
+            { d: 9, n: "Chocolate Day", i: "🍫", color: "#a855f7", m: "Sweeter than chocolate, that's you!", s: "BYTE: Sweet", img: "https://raw.githubusercontent.com/CreativeThinking123/valentine-tech/main/eighth.jpeg" },
             { d: 10, n: "Teddy Day", i: "🧸", color: "#f97316", m: "Virtual hugs incoming!", s: "OBJ: Soft_Body", img: "https://raw.githubusercontent.com/CreativeThinking123/check/main/dv3.jpeg" },
             { d: 11, n: "Promise Day", i: "🤝", color: "#3b82f6", m: "I promise to be your best partner.", s: "KEY: Sankar_ Divya ", img: "https://static.india.com/wp-content/uploads/2024/02/MixCollage-11-Feb-2024-01-13-AM-4896.jpg?impolicy=Medium_Widthonly&w=400" },
             { d: 12, n: "Hug Day", i: "🫂", color: "#ec4899", m: "Sending a big squeeze!", s: "SYNC: Active", img: "https://img.freepik.com/premium-vector/valentines-day-girl-hugs-guy-couple-love-vector-cartoon-style_844724-2511.jpg?w=360" },
@@ -190,19 +194,18 @@ if(secretQuestions[item.d] && !unlockedDays[item.d]) {
             });
         }
 function showSurprise(item) {
-    const rose = document.getElementById("roseMusic");
-    const choco = document.getElementById("chocoMusic");
-    const teddy = document.getElementById("teddyMusic");
+    // Stop all audio first
+    const allAudios = document.querySelectorAll('audio');
+    allAudios.forEach(audio => { audio.pause(); audio.currentTime = 0; });
 
-    // Stop all music first
-    if (rose) { rose.pause(); rose.currentTime = 0; }
-    if (choco) { choco.pause(); choco.currentTime = 0; }
-    if (teddy) { teddy.pause(); teddy.currentTime = 0; }
-
-    // Play music based on the day name
-    if (item.n === "Rose Day" && rose) rose.play().catch(()=>{});
-    if (item.n === "Propose Day" && choco) choco.play().catch(()=>{});
-    if (item.n === "Teddy Day" && teddy) teddy.play().catch(()=>{});
+    // Play music based on the specific date (item.d)
+    if (item.d === 7) document.getElementById("roseMusic")?.play().catch(()=>{});
+    if (item.d === 8) document.getElementById("chocoMusic")?.play().catch(()=>{});
+    if (item.d === 9) document.getElementById("raksMusic")?.play().catch(()=>{});     // Chocolate Day
+    if (item.d === 10) document.getElementById("teddyMusic")?.play().catch(()=>{});
+    if (item.d === 12) document.getElementById("cheliyaMusic")?.play().catch(()=>{}); // Hug Day
+    if (item.d === 13) document.getElementById("neetiMusic")?.play().catch(()=>{});   // Kiss Day
+    if (item.d === 14) document.getElementById("sundariMusic")?.play().catch(()=>{}); // Valentine's Day
 
     document.documentElement.style.setProperty('--theme', item.color);
     document.getElementById('m-title').innerText = item.n;
@@ -222,19 +225,14 @@ function showSurprise(item) {
     document.getElementById('modal').style.display = 'flex';
     confetti({particleCount: 100, colors: [item.color, '#ffffff']});
 }
-
 function closeM() {
     document.getElementById('modal').style.display = 'none';
-
-    const rose = document.getElementById("roseMusic");
-    const choco = document.getElementById("chocoMusic");
-    const teddy = document.getElementById("teddyMusic");
-
-    if (rose) { rose.pause(); rose.currentTime = 0; }
-    if (choco) { choco.pause(); choco.currentTime = 0; }
-    if (teddy) { teddy.pause(); teddy.currentTime = 0; }
+    const allAudios = document.querySelectorAll('audio');
+    allAudios.forEach(audio => {
+        audio.pause();
+        audio.currentTime = 0;
+    });
 }
-
 
 
         window.addEventListener('keydown', e => { buffer += e.key.toUpperCase(); if(buffer.includes(secret)) { isUnlocked = true; initUniverse(); } });
